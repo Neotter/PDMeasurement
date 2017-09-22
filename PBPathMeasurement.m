@@ -57,14 +57,20 @@ xlim([min([IChannalNoDC;QChannalNoDC]),max([IChannalNoDC;QChannalNoDC])]);
 plot(IChannalNoDC,QChannalNoDC);
 grid on;
 title('复平面上IQ图(去直流)');
-%计算距离
+%计算距离和相位并且显示直流分量
 [distance,p] = distanceCalculation(IChannalNoDC,QChannalNoDC);
 
 figure(2);
+subplot(2,2,1);
+plot(SI);
+subplot(2,2,2);
+plot(SQ);
+
+subplot(2,2,3);
 plot(p);
 title('相位');
 
-figure(3);
+subplot(2,2,4)
 plot(distance);
 title('距离');
 

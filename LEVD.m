@@ -47,7 +47,6 @@ function S = LEVD2 (IQChannal)
                 temp = [IQChannal(t);mark];
                 E = [E,temp];
             end
-            
         end
         %更新S,如果E只有一个值,S为前一个值,如果E为不同的极大极小值,S为E的差值
         if (size(E,2) < 2)
@@ -57,5 +56,5 @@ function S = LEVD2 (IQChannal)
         end
     end
     %边界点T
-    S = [S;[0.9 * S(end) + 0.1 * (E(1,end-1) + E(1,end))/2]];
+    S = [S;S(end)];
 end
