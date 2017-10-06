@@ -12,7 +12,6 @@ function y = CIC(x)
 % Type 'help codegen' for more information.
 
 persistent Hd;
-
 if isempty(Hd)
     
     decf    = 16;  % Decimation Factor

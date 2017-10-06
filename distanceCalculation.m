@@ -4,7 +4,7 @@ function [distance,p] = distanceCalculation( IChannal,QChannal )
     detalDistance = 0;
     %计算原始相位
     p = atan(QChannal./IChannal);
-    %处理相位,当相位正负符号每次变换,就加2pi
+    %处理相位,当相位由正到负的时候,就加2pi
 %     for i = 1:size(rawPhase)
 %         if 
 %     end
