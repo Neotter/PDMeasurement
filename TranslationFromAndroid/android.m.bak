@@ -1,0 +1,61 @@
+
+%
+Path = 'E:\work\gammadata\20170721\android\noaction\IQ__0_20170721025940.txt';
+Path = 'E:\work\gammadata\20170721\android\action\IQ__7_20170721040120.txt';
+
+%'E:\work\gammadata\phase\iq\phase\ios\image.txt';
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+decsize=32;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      
+[txt,real,image]=textread(Path,'%s%n%n','delimiter', ',');
+%[real,image]=textread(Path,'%n%n','delimiter', ' ');
+realvalid=real(32*20:length(real));
+% realvalid2=zeros(length(realvalid),1);
+% minreal = min(realvalid);
+% maxreal = max(realvalid);
+imagevalid=image(32*20:length(image));
+% imagevalid2=zeros(length(imagevalid),1);
+% minimage = min(imagevalid);
+% maximage = max(imagevalid);
+% 
+% averagereal = 0;
+% averageimage = 0;
+% sumreal = 0;
+% sumimage =0;
+% for i=1:length(realvalid)
+%     sumreal = sumreal + realvalid(i);
+% end
+% 
+% for i=1:length(imagevalid)
+%     sumimage = sumimage + imagevalid(i);
+% end
+% 
+% averagereal = sumreal/length(realvalid);
+% averageimage = sumimage/length(imagevalid);
+% for i=1:length(imagevalid2)
+%     imagevalid2(i) = ((imagevalid(i)+2.2385e4+1000+300))*4/3;
+% end
+% 
+% for i=1:length(realvalid2)
+%     realvalid2(i) = (realvalid(i)-4.065e4);
+% end
+figure;
+plot(realvalid,imagevalid);
+%figure;
+%plot(realvalid2,imagevalid2);
+%axis([-2000,2000,-2000, 2000]);
+%plot(image,real);
+len = length(realvalid);
+n=ones(len,1);
+for jj=1:len
+    n(jj) = jj*0.01/32;
+end
+
+figure;
+plot(n,realvalid,n,imagevalid);
+
+%% 
+
+
+

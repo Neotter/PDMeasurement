@@ -1,20 +1,20 @@
 clc;
 clear;
-%è¯»å??°æ?
-[dataPoint,Fs] = audioread('ProxyRecording83420654_20171121042124.wav','native');%ProxyRecording-1756217116_20171011010733
-%CWæ³¢ç?é¢??ï¿?7500Hz
+%è¯»å–æ•°æ®
+[dataPoint,Fs] = audioread('ProxyRecording-1756217116_20171011010733.wav','native');
+%CWæ³¢çš„é¢‘ç‡ä¸?7500Hz
 f = 17500;
-%ï¿?000ä¸??ä¼??ï¿?ï¿½ï¿½å¾?¤§???ï¿????
-%dataPoint = dataPoint(20000:end);
+%å‰?000ä¸ªç‚¹ä¼šæœ‰ä¸?¸ªå¾ˆå¤§çš„éœ‡è?æˆªæ‰
+dataPoint = dataPoint(500:end);
 lengthOfData = length(dataPoint);
 dataPoint = double(dataPoint).';
-%æ­£äº¤???
-t = (0:(1/Fs):(lengthOfData/Fs));
+%æ­£äº¤å‘é‡
+t = (0:(1/48000):(lengthOfData/48000));
 cos2pift = cos(2*pi*f.*t);
-nsin2pift = sin(2*pi*f.*t);
+nsin2pift = -1*sin(2*pi*f.*t);
 cos2pift = cos2pift(1:lengthOfData);
 nsin2pift = nsin2pift(1:lengthOfData);
-%??????è¿?ICæ»¤æ³¢???IQä¿¡å?ï¿?
+%å–å¾—æœªç»è¿‡CICæ»¤æ³¢åçš„IQä¿¡å·å€?
 IChannalBeforeCIC = dataPoint .* cos2pift;
 QChannalBeforeCIC = dataPoint .* nsin2pift;
 lengthOfData = length(IChannalBeforeCIC);
@@ -25,23 +25,21 @@ IChannal = double(FIR(IChannalBeforeCIC.'));
 QChannal = double(FIR(QChannalBeforeCIC.'));
 %IChannal = IChannal(5000:end-13000);
 %QChannal = QChannal(5000:end-13000);
-%å½?????300?ºé?ï¿?%IChannalNorm = (IChannal./max(abs(IChannal))).*300;
+%å½’ä¸€åŒ–åˆ°300åŒºé—´å†?%IChannalNorm = (IChannal./max(abs(IChannal))).*300;
 %QChannalNorm = (QChannal./max(abs(QChannal))).*300;
 
-%????»é????????¨æ??????Qï¿?figure(1);
-figure;
+%æœªåšå»é™æ€å‘é‡æ—¶åœ¨æ—¶åŸŸä¸Šçš„IQå›?figure(1);
+subplot(4,2,1);
 plot([1:length(IChannal)],IChannal,[1:length(QChannal)],QChannal);
 grid on;
 title('I/Q waveforms');
-%????»é????????¨å?å¹³é?ä¸??ï¿?
-figure;
+%æœªåšå»é™æ€å‘é‡æ—¶åœ¨å¤å¹³é¢ä¸Šçš„å€?
+subplot(4,2,2);
 plot(IChannal,QChannal);
 %%xlim([min([IChannal;QChannal]),max([IChannal;QChannal])]);
 grid on;
 title('Complex I/Q traces');
-%????»é????????¨æ??????¿½?
-%IChannal = IChannal(100000:400000);
-%QChannal = QChannal(100000:400000);
+%åšäº†å»é™æ€å‘é‡æ—¶åœ¨æ—¶åŸŸä¸Šçš„å?
 SI =sum(IChannal)/length(IChannal);% LEVD(IChannal);
 % plot(SI);
 % hold on 
@@ -52,7 +50,7 @@ SQ =sum(QChannal)/length(QChannal);% LEVD(QChannal);
 % grid on
 IChannalNoDC = IChannal-SI;
 QChannalNoDC= QChannal-SQ;
-%å½?????300?ºé?ï¿?%IChannalNoDCNorm = (IChannalNoDC./max(abs(IChannalNoDC))).*300;
+%å½’ä¸€åŒ–åˆ°300åŒºé—´å†?%IChannalNoDCNorm = (IChannalNoDC./max(abs(IChannalNoDC))).*300;
 %QChannalNoDCNorm = (QChannalNoDC./max(abs(QChannalNoDC))).*300;
 % subplot(4,2,3);
 % % plot([1:length(IChannal)],SI,[1:length(IChannal)],IChannal);
@@ -62,25 +60,25 @@ QChannalNoDC= QChannal-SQ;
 % % plot([1:length(QChannal)],SQ,[1:length(QChannal)],QChannal);
 % plot([1:length(QChannal)],QChannal);
 % title('Static vector of Q');
-figure;
+subplot(4,2,5);
 plot([1:length(IChannalNoDC)],IChannalNoDC,[1:length(QChannalNoDC)],QChannalNoDC);
 grid on;
 title('I/Q waveforms(no static vector)');
-% %????»é????????¨å?å¹³é?ä¸??ï¿?
-figure;
-plot(IChannalNoDC,QChannalNoDC);
-ylim([min([IChannalNoDC;QChannalNoDC]),max([IChannalNoDC;QChannalNoDC])]);
-xlim([min([IChannalNoDC;QChannalNoDC]),max([IChannalNoDC;QChannalNoDC])]);
-grid on;
-title('Complex I/Q traces(no static vector)');
-% %è®¡ç?è·?????ä½?¹¶ä¸??ç¤ºç?æµ??ï¿?
+% %åšäº†å»é™æ€å‘é‡æ—¶åœ¨å¤å¹³é¢ä¸Šçš„å€?
+% subplot(4,2,6);
+% plot(IChannalNoDC,QChannalNoDC);
+% ylim([min([IChannalNoDC;QChannalNoDC]),max([IChannalNoDC;QChannalNoDC])]);
+% xlim([min([IChannalNoDC;QChannalNoDC]),max([IChannalNoDC;QChannalNoDC])]);
+% grid on;
+% title('Complex I/Q traces(no static vector)');
+% %è®¡ç®—è·ç¦»å’Œç›¸ä½å¹¶ä¸”æ˜¾ç¤ºç›´æµåˆ†é‡?
 [distance,p] = distanceCalculation(IChannalNoDC,QChannalNoDC);
 
 % subplot(4,2,7);
 % plot(p);
 % title('Phase change');
 
-figure;
+subplot(4,2,8)
 plot(distance);
 title('Distance');
 
